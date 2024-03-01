@@ -1,0 +1,49 @@
+configure terminal
+!Se establece el nombre de host R1.
+!
+hostname Router-David
+
+
+!Se establece la contraseña cifrada “Dsmv564231!” para el modo EXEC privilegiado.
+!
+enable secret Dsmv564231!
+line console 0
+
+
+!Se establece la contraseña de consola “cisco” de modo que se requiera iniciar sesión.
+!
+password Tel879"
+login
+
+!Se establece el tiempo de espera de modo que no caduque nunca.
+!
+exec-timeout 0 0
+!Se establece la contraseña “Tel879&” en las 16 líneas vty de modo que se requiera iniciar sesión.
+!
+line vty 0 15
+password Tel879&
+login
+exit
+
+
+!Vuelva al modo de configuración global.
+!
+service password-encryption
+
+banner motd $Configuración basica de router Authorized Access Only! att: David Mora$
+
+interface Gi 0/0
+ip address 172.16.3.1 255.255.255.0
+no shutdown
+exit
+
+interface Gi 0/1
+ip address 172.32.0.1 255.255.255.0
+no shutdown
+exit
+
+copy running-config startup-config
+
+show running-config
+
+
