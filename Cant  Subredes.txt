@@ -27,3 +27,42 @@ Class B                   Effective  Effective
   4      255.255.255.240     16         14
   5      255.255.255.248     32          6
   6      255.255.255.252     64          2
+
+
+
+Configuración de muestra:
+Routers A and B are connected via serial interface.
+
+Router A
+  hostname routera
+  !
+  ip routing
+  !
+  int e 0
+  ip address 172.16.50.1 255.255.255.0
+  !(subnet 50)
+  int e 1 ip address 172.16.55.1 255.255.255.0
+  !(subnet 55)
+  int s 0 ip address 172.16.60.1 255.255.255.0
+  !(subnet 60) int s 0
+  ip address 172.16.65.1 255.255.255.0 (subnet 65)
+  !S 0 connects to router B
+  router rip
+  network 172.16.0.0
+Router B
+  hostname routerb
+  !
+  ip routing
+  !
+  int e 0
+  ip address 192.168.10.200 255.255.255.240
+  !(subnet 192)
+  int e 1
+  ip address 192.168.10.66 255.255.255.240
+  !(subnet 64)
+  int s 0
+  ip address 172.16.65.2 (same subnet as router A's s 0)
+  !Int s 0 connects to router A
+  router rip
+  network 192.168.10.0
+  network 172.16.0.0
