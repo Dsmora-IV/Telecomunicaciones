@@ -1,0 +1,49 @@
+enable
+configure terminal 
+
+!deshabilitar los nombres de dominio (unicamente para simulación)
+no ip domain lookup 
+
+hostname S1
+
+!asignar un nombre de dominio
+ip domain-name ccna-lab.com
+
+!establcer una contraseña
+enable secret ciscoenpass
+
+!Se establece la contraseña cifrada “ciscoenpass” para el modo EXEC privilegiado.
+line console 0
+password ciscoconpass
+login
+exit
+
+!deshabilitar las interfaces que no se esten usando
+interface range f0/1-4, f0/7-24, g0/1-2
+shutdown 
+
+!establecer un usuario y contraseña de acceso
+username admin secret admin1pass
+
+!establecer 16 líneas vty de modo que se requiera iniciar sesión.
+line vty 0 15
+login local 
+transport input ssh
+exit
+
+
+service password-encryption 
+
+banner motd #Unauthorized Access is Prohibited!#
+
+crypto key generate rsa 
+
+interface vlan 1
+description  Subnet A
+ip address 192.168.10.2 255.255.255.128
+ipv6 address FE80::2 link-local 
+ipv6 address 2001:db8:acad:a::2/64
+no shutdown 
+exit
+
+ip default-gateway 192.168.10.1
