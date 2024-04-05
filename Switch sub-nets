@@ -1,0 +1,26 @@
+interface GigabitEthernet0/0
+description LAN-A
+no ip address 192.168.10.1 255.255.255.0
+no ipv6 address FE80::1 link-local
+no ipv6 address 2001:A::1/64
+!
+interface GigabitEthernet0/1
+description LAN-B
+no ip address 192.168.20.1 255.255.255.0
+no ipv6 address FE80::1 link-local
+no ipv6 address 2001:B::1/64
+!
+interface GigabitEthernet0/0.10
+description LAN-A
+encapsulation dot1q 10
+ip address 192.168.10.1 255.255.255.0
+ipv6 address FE80::1 link-local
+ipv6 address 2001:A::1/64
+!
+interface GigabitEthernet0/0.20
+description LAN-B
+encapsulation dot1q 20
+ip address 192.168.20.1 255.255.255.0
+ipv6 address FE80::1 link-local
+ipv6 address 2001:B::1/64
+!
