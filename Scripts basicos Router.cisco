@@ -6,6 +6,9 @@ domain-name example.com
 
 configure terminal
 
+!Disable DNS lookup
+no ip domain lookup 
+
 !Se establece el nombre de host R1.
 hostname R1
 
