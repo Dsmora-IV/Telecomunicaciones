@@ -1,0 +1,35 @@
+Switch>enable
+Switch# configure terminal
+Switch(config)#hostname S-1
+S-1(config)#no ip domain lookup
+S-1(config)#
+S-1(config)#
+S-1(config)#enable secret class
+S-1(config)#
+S-1(config)#
+S-1(config)#line 0
+S-1(config-line)#exit
+S-1(config)#line console 0
+S-1(config-line)#password cisco
+S-1(config-line)#login
+S-1(config-line)#exit
+S-1(config)#
+S-1(config)#line vty 0 15
+S-1(config-line)#exec-timeout 
+% Incomplete command.
+S-1(config-line)#exec-timeout 0 0
+S-1(config-line)#password cisco
+S-1(config-line)#login local
+S-1(config-line)#exit
+S-1(config)#service password-encryption
+S-1(config)#
+S-1(config)#
+S-1(config)#banner motd $Configuracion basica de switch unicamente se permite el acceso autorizado! att: David Mora y Jhair Paris$
+S-1(config)#
+S-1(config)#exit
+S-1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+S-1#clock set 8:01:00 April 04 2024
+
+S-1#copy running-config startup-config
