@@ -1,0 +1,52 @@
+Router>enable
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R-1
+R-1(config)#no ip domain lookup
+R-1(config)#enable secret class
+R-1(config)#password cisco
+              ^
+% Invalid input detected at '^' marker.
+	
+R-1(config)#password cisco
+              ^
+% Invalid input detected at '^' marker.
+	
+R-1(config)#line console 0
+R-1(config-line)#password cisco
+R-1(config-line)#login
+R-1(config-line)#exit
+R-1(config)#exec-timeout 0 0
+              ^
+% Invalid input detected at '^' marker.
+	
+R-1(config)#line vty 0 15
+R-1(config-line)#login local
+R-1(config-line)#exec-timeout 0 0
+R-1(config-line)#password cisco
+R-1(config-line)#login local
+R-1(config-line)#exit
+R-1(config)#
+R-1(config)#
+R-1(config)#service password-encryption
+R-1(config)#banner motd $Configuracion basica de router unicamente se permite el acceso autorizado! att: David Mora y Jhair Paris$
+R-1(config)#
+R-1(config)#clock set 7:47:00 April 04 2024
+                  ^
+% Invalid input detected at '^' marker.
+	
+R-1(config)#clock set 07:47:00 April 04 2024
+                  ^
+% Invalid input detected at '^' marker.
+	
+R-1(config)#
+R-1(config)#exit
+R-1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R-1#clock set 7:48:00 April 7 2024
+R-1#show clock
+7:48:18.323 UTC Sun Apr 7 2024
+R-1#clock set 7:48:00 April 8 2024
+R-1# show runn
+R-1# show running-config
