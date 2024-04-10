@@ -1,0 +1,76 @@
+hostname S1
+
+no ip domain-lookup
+
+enable secret class
+
+line console 0
+exec-timeout 0 0
+password cisco
+login
+
+line vty 0 15
+login local
+exec-timeout 0 0
+password cisco
+login
+exit
+
+service password-encryption
+
+banner motd $Configuracion basica de Switch1 unicamente se permite el acceso autorizado! att: David Mora y Jhair Paris$
+exit
+
+clock set 15:30:00 27 Aug 2019
+
+copy running-config startup-config
+
+!Create and name the required VLANs on each switch from the table above.
+vlan 10
+name Management
+vlan 20
+name Sales
+vlan 30
+name Operations
+vlan 999
+name Parking_Lot
+vlan 1000
+name Native
+exit
+
+!Configure the management interface and default gateway on each switch using the IP address information in the Addressing Table.
+interface vlan 10
+ip address 192.168.10.11 255.255.255.0
+no shutdown
+exit
+ip default-gateway 192.168.10.1
+
+! Assign all unused ports on the switch to the Parking_Lot VLAN, configure them for static access mode, and administratively deactivate them.
+interface range f0/2 - 4 , f0/7 - 24 , g0/1 - 2
+switchport mode access
+switchport access vlan 999
+shutdown
+
+!Assign used ports to the appropriate VLAN (specified in the VLAN table above) and configure them for static access mode.
+interface f0/6
+switchport mode access
+switchport access vlan 20
+
+!Verify that the VLANs are assigned to the correct interfaces.
+show vlan brief
+
+!Configure static trunking on interface F0/1 for both switches.
+interface f0/1
+switchport mode trunk
+
+switchport trunk native vlan 1000
+
+switchport trunk allowed vlan 10,20,30,1000
+
+show interfaces trunk
+
+!Configure S1’s interface F0/5 with the same trunk parameters as F0/1. This is the trunk to the router.
+interface f0/5
+switchport mode trunk
+switchport trunk native vlan 1000
+switchport trunk allowed vlan 10,20,30,1000

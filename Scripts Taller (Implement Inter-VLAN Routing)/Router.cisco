@@ -1,0 +1,68 @@
+enable
+configure terminal
+
+hostname R1
+
+no ip domain lookup
+enable secret class
+
+
+line console 0
+password cisco
+login
+exit
+
+line vty 0 15
+login local
+exec-timeout 0 0
+password cisco
+login
+exit
+
+
+service password-encryption
+
+
+banner motd $Configuracion basica de router unicamente se permite el acceso autorizado! att: David Mora y Jhair Paris$
+
+exit
+
+copy running-config startup-config
+
+clock set 7:48:00 April 10 2024
+show clock
+
+
+show running-config
+
+!part 4
+configure terminal
+interface g0/0/1
+R1(config-if)# no shutdown
+R1(config-if)# exit
+
+!Configure sub-interfaces for each VLAN as specified in the IP addressing table. All sub-interfaces use 802.1Q encapsulation. Ensure the sub-interface for the native VLAN does not have an IP address assigned. Include a description for each sub-interface.
+
+interface g0/0/1.10
+encapsulation dot1q 10
+description Management Network
+ip address 192.168.10.1 255.255.255.0
+
+interface g0/0/1.20
+encapsulation dot1q 20
+description Sales Network
+ip address 192.168.20.1 255.255.255.0
+
+interface g0/0/1.30
+encapsulation dot1q 30
+description Operations Network
+ip address 192.168.30.1 255.255.255.0
+
+interface g0/0/1.1000
+encapsulation dot1q 1000 native
+description Native VLAN
+exit
+
+exit
+
+show ip interface brief
