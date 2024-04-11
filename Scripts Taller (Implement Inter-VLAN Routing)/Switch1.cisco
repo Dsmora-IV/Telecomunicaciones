@@ -1,28 +1,28 @@
 hostname S1
-
+!
 no ip domain-lookup
-
+!
 enable secret class
-
+!
 line console 0
 exec-timeout 0 0
 password cisco
 login
-
+!
 line vty 0 15
 login local
 exec-timeout 0 0
 password cisco
 login
 exit
-
+!
 service password-encryption
-
+!
 banner motd $Configuracion basica de Switch1 unicamente se permite el acceso autorizado! att: David Mora y Santiago Sarmiento$
 exit
-
+!
 clock set 15:30:00 27 Aug 2019
-
+!
 copy running-config startup-config
 
 !Create and name the required VLANs on each switch from the table above.
