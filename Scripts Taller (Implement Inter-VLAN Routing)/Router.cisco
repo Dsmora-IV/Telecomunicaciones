@@ -43,7 +43,7 @@ R1(config-if)# exit
 
 !Configure sub-interfaces for each VLAN as specified in the IP addressing table. All sub-interfaces use 802.1Q encapsulation. Ensure the sub-interface for the native VLAN does not have an IP address assigned. Include a description for each sub-interface.
 
-interface g0/0/1.10
+interface gigabitEthernet 0/1.10
 encapsulation dot1q 10
 description Management Network
 ip address 192.168.10.1 255.255.255.0
