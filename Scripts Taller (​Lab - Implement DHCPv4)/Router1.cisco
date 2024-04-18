@@ -50,7 +50,7 @@ description Native VLAN
 
 show ip interface brief
 
-interface g0/0/0
+interface gigabitEthernet 0/0
 ip address 10.0.0.1 255.255.255.252
 no shutdown
 
