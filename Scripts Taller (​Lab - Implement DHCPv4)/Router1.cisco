@@ -32,19 +32,19 @@ clock set 7:48:00 April 10 2024
 show clock
 
 
-interface g0/0/1
+interface gigabitEthernet 0/1
 no shutdown
 exit
 
-interface g0/0/1.100
+interface gigabitEthernet 0/1.100
 description Client Network
 encapsulation dot1q 100
 ip address 192.168.1.1 255.255.255.192
-interface g0/0/1.200
+interface gigabitEthernet 0/1.200
 encapsulation dot1q 200
 description Management Network
 ip address 192.168.1.65 255.255.255.224
-interface g0/0/1.1000
+interface gigabitEthernet 0/1.1000
 encapsulation dot1q 1000 native
 description Native VLAN
 
