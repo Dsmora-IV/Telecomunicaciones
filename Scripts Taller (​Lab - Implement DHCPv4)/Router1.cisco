@@ -1,0 +1,83 @@
+enable
+configure terminal
+
+hostname R-1
+
+no ip domain lookup
+enable secret class
+
+
+line console 0
+exec-timeout 0 0
+password cisco
+login
+exit
+
+line vty 0 15
+login local
+exec-timeout 0 0
+password cisco
+login
+exit
+
+service password-encryption
+
+banner motd $Configuracion basica de router unicamente se permite el acceso autorizado! att: David Mora y Jhair Paris$
+
+exit
+
+copy running-config startup-config
+
+clock set 7:48:00 April 10 2024
+show clock
+
+
+interface g0/0/1
+no shutdown
+exit
+
+interface g0/0/1.100
+description Client Network
+encapsulation dot1q 100
+ip address 192.168.1.1 255.255.255.192
+interface g0/0/1.200
+encapsulation dot1q 200
+description Management Network
+ip address 192.168.1.65 255.255.255.224
+interface g0/0/1.1000
+encapsulation dot1q 1000 native
+description Native VLAN
+
+show ip interface brief
+
+interface g0/0/0
+ip address 10.0.0.1 255.255.255.252
+no shutdown
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.2
+
+ping 192.168.1.97
+
+copy running-config startup-config
+
+
+ip dhcp excluded-address 192.168.1.1 192.168.1.5
+
+ip dhcp pool R1_Client_LAN
+
+network 192.168.1.0 255.255.255.192
+domain-name ccna-lab.com
+default-router 192.168.1.1
+lease 2 12 30
+exit
+
+ip dhcp excluded-address 192.168.1.97 192.168.1.101
+ip dhcp pool R2_Client_LAN
+
+network 192.168.1.96 255.255.255.240
+default-router 192.168.1.97
+domain-name ccna-lab.com
+lease 2 12 30
+exit
+
+copy running-config startup-config

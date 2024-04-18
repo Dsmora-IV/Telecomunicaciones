@@ -1,0 +1,38 @@
+hostname Sw-2
+
+no ip domain-lookup
+
+enable secret class
+
+line console 0
+exec-timeout 0 0
+password cisco
+login
+
+line vty 0 15
+login local
+exec-timeout 0 0
+password cisco
+login
+exit
+
+service password-encryption
+
+banner motd $Configuracion basica de Switch1 unicamente se permite el acceso autorizado! att: David Mora y Santiago Sarmiento$
+exit
+
+clock set 15:30:00 27 Aug 2019
+
+interface vlan 1
+ip address 192.168.1.98 255.255.255.240
+no shutdown
+exit
+
+ip default-gateway 192.168.1.97
+
+interface range f0/1 - 4, f0/6 - 17, f0/19 - 24, g0/1 - 2
+switchport mode access
+shutdown
+exit
+
+copy running-config startup-config

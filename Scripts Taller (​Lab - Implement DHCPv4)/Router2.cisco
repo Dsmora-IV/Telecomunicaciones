@@ -1,0 +1,50 @@
+enable
+configure terminal
+
+hostname R-2
+
+no ip domain lookup
+enable secret class
+
+
+line console 0
+exec-timeout 0 0
+password cisco
+login
+exit
+
+line vty 0 15
+login local
+exec-timeout 0 0
+password cisco
+login
+exit
+
+service password-encryption
+
+banner motd $Configuracion basica de router unicamente se permite el acceso autorizado! att: David Mora y Jhair Paris$
+
+exit
+
+copy running-config startup-config
+
+clock set 7:48:00 April 10 2024
+show clock
+
+interface g0/0/1
+ip address 192.168.1.97 255.255.255.240
+no shutdown
+exit
+
+interface g0/0/0
+ip address 10.0.0.2 255.255.255.252
+no shutdown
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+
+interface g0/0/1
+ip helper-address 10.0.0.1
+end
+
+wr
+
