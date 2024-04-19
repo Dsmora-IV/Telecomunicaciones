@@ -22,7 +22,7 @@ exit
 
 service password-encryption
 
-banner motd $Configuracion basica de router unicamente se permite el acceso autorizado! att: David Mora y Jhair Paris$
+banner motd $Configuracion basica de router utilice la contrasenha cisco para acceder a la consola y la contrasenha class para acceder al modo EXEC privilegiado att: David Mora y Santiago Sarmiento$
 
 exit
 
@@ -71,12 +71,15 @@ default-router 192.168.1.1
 lease 2 12 30
 exit
 
+
 ip dhcp excluded-address 192.168.1.97 192.168.1.101
 ip dhcp pool R2_Client_LAN
 
 network 192.168.1.96 255.255.255.240
 default-router 192.168.1.97
 domain-name ccna-lab.com
+
+!Un lease es el tiempo que un dispositivo puede usar una dirección IP antes de tener que renovarla o solicitar una nueva.
 lease 2 12 30
 exit
 
