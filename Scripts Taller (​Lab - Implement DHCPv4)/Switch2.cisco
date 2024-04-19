@@ -18,10 +18,10 @@ exit
 
 service password-encryption
 
-banner motd $Configuracion basica de Switch1 unicamente se permite el acceso autorizado! att: David Mora y Santiago Sarmiento$
+banner motd $Configuracion basica de Switch2 utilice la contrasenha cisco para acceder a la consola y la contrasenha class para acceder al modo EXEC privilegiado att: David Mora y Santiago Sarmiento$
 exit
 
-clock set 15:30:00 27 Aug 2019
+clock set 8:32:00 27 April 2024
 
 interface vlan 1
 ip address 192.168.1.98 255.255.255.240
