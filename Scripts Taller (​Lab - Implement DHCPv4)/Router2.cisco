@@ -22,7 +22,7 @@ exit
 
 service password-encryption
 
-banner motd $Configuracion basica de router unicamente se permite el acceso autorizado! att: David Mora y Jhair Paris$
+banner motd $Configuracion basica de router utilice la contrasenha cisco para acceder a la consola y la contrasenha class para acceder al modo EXEC privilegiado att: David Mora y Santiago Sarmiento$
 
 exit
 
