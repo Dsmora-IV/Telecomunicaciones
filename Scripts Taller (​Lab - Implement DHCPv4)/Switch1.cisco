@@ -18,7 +18,7 @@ exit
 
 service password-encryption
 
-banner motd $Configuracion basica de Switch1 unicamente se permite el acceso autorizado! att: David Mora y Santiago Sarmiento$
+banner motd $Configuracion basica de Switch1 utilice la contrasenha cisco para acceder a la consola y la contrasenha class para acceder al modo EXEC privilegiado att: David Mora y Santiago Sarmiento$
 exit
 
 clock set 15:30:00 27 Aug 2019
