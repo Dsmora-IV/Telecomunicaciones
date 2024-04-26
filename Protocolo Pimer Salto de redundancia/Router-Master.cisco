@@ -1,0 +1,34 @@
+interface Fa0/ 0 
+ip address 10.0.0.10 255.255.255.0 
+no shutdown 
+
+standby 1 ip 10.0.0.150
+
+standby 1 priority 101 
+standby 1 preempt 
+standby 1 track fa0/ 1
+
+interface Fa0/ 1 
+ip address 172.16.1.2 255.255.255.0
+no shutdown 
+exit
+
+router rip 
+version 2 
+network 172.16.1.0 
+network 10.0.0.0 
+no auto-summary 
+exit
+
+! tras configurar el router Backup verificar el estado de espera.
+
+show standby
+
+!En la figura anterior, puede ver que el enrutador maestro está funcionando actualmente como enrutador activo porque tiene mayor prioridad (101) que el enrutador de respaldo (99).
+
+!Para explicar qué sucede cuando falla el enrutador activo, cerraremos la interfaz Fa0/0 en el enrutador maestro.
+
+interface fa0/0
+shutdown
+
+!ahora regrese y mire la lista de espera de los routers.

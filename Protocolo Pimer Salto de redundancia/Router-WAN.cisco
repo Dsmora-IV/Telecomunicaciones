@@ -1,0 +1,26 @@
+interface Loopback1 
+ip address 200.200.200.1 255.255.255.0 
+no shutdown 
+exit 
+
+interface Fa0/ 0 
+ip address 172.16.2.1 255.255.255.0 
+no shutdown 
+exit 
+
+interface Fa0/ 1 
+ip address 172.16.1.1 255.255.255.0 
+no shutdown 
+exit
+
+! Una vez que haya configurado las direcciones IP apropiadas, ejecute los siguientes comandos para configurar el protocolo de enrutamiento RIP versión 2.
+
+router rip 
+version 2 
+network 172.16.1.0 
+network 172.16.2.0 
+network 200.200.200.0 
+no auto-summary 
+exit
+
+! Una vez que haya configurado las direcciones IP y el enrutamiento en el enrutador WAN, continúe con el enrutador maestro y ejecute los siguientes comandos. Este enrutador actuará como enrutador activo.

@@ -1,0 +1,30 @@
+interface Fa0/ 0 
+ip address 10.0.0.20 255.255.255.0 
+no shutdown
+
+standby 1 ip 10.0.0.150 
+standby 1 priority 99 
+standby 1 preempt 
+exit
+
+interface Fa0/ 1 
+ip address 172.16.2.2 255.255.255.0 
+no shutdown 
+exit 
+
+router rip 
+version 2 
+network 172.16.2.0 
+network 10.0.0.0 
+no auto-summary 
+exit
+
+!Una vez que haya configurado el protocolo de enrutamiento HSRP en los enrutadores maestro y de respaldo, ahora es el momento de verificar su configuración. Para hacerlo, en el enrutador maestro, ejecute el siguiente comando.
+!en el router Maestro
+
+!una vez verificada y apagado la interfaz del otro router se deben mirar las configuraciones.
+
+show standby
+
+
+!https://itexamanswers.net/lab-130-configuring-redundancy-using-hsrp.html
