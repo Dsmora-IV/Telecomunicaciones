@@ -1,0 +1,46 @@
+! show ip protocols
+! show ip ospf interface brief
+! show ip ospf neighbor
+! show ip route static | begin Gateway
+
+
+! habilitación del enrutamiento para los swithces de capa 3
+ip routing
+! modo de configuración del enrutador OSPF usando ID de proceso 123
+router ospf 123
+! con el metodo de cuatro ceros no es necesario calcular la máscara
+! pero si se debe especificar la IP que posee la interfaz qu esta conectada directamente a la red
+red 10.10.0.2 0.0.0.0 área 0
+! Se habilita el Ospf en las demas interfaces  con el uso de la mascara 0.0.0.0
+red 10.10.8.1 0.0.0.0 área 0
+red 10.10.9.1 0.0.0.0 área 0
+
+end
+! Verifique la configuración de OSPF en D1 usando el comando "show ip protocols".
+show ip protocols
+
+conf t
+router ospf 123
+router-id 2.2.2.2
+end
+
+!interfaces pasivas
+router ospf 123
+passive-interface default
+no passive-interface g1/0/5
+
+! ajustar los costos del enlace OSPF.
+! se determina el ancho de banda por defecto suele ser de 100 mbps
+conf t
+router ospf 123
+auto-cost reference-bandwidth 1000
+end
+
+show ip ospf | include Ref
+
+
+interface g1/0/5
+ip ospf hello-interval 5
+ip ospf dead-interval 20
+
+show ip ospf interface g1/0/5 | include Timer

@@ -1,0 +1,77 @@
+!verificar estado  de las interfaces show ip interface brief | include manual
+
+hostname R1 
+no ip domain lookup 
+line con 0 
+logging sync 
+exec-time 0 0 
+exit
+
+interface Loopback0 
+ip address 209.165.200.225 255.255.255.224 
+no shut 
+exit 
+
+interface Loopback1
+ip address 192.168.1.1 255.255.255.192 
+no shut 
+exit 
+
+interface GigabitEthernet0/0/1 
+ip address 10.10.0.1 255.255.255.248 
+no shut 
+exit
+
+
+!switch 1 Capa 3
+hostname D1 
+no ip domain lookup 
+line con 0 
+logging sync 
+exec-time 0 0 
+exit 
+
+interface g1/0/5 
+no switchport 
+ip address 10.10.0.2 255.255.255.248 
+no shut 
+exit 
+
+interface g1/0/23 
+no switchport 
+ip address 10.10.8.1 255.255.255.0 
+no shut 
+exit 
+
+interface g1/0/24 
+no switchport 
+ip address 10.10.9.1 255.255.255.0 
+no shut 
+exit
+
+
+!switch 2 Capa 3
+hostname D2 
+no ip domain lookup 
+line con 0 
+logging sync 
+exec-time 0 0 
+exit 
+
+interface g1/0/5 
+no switchport 
+ip address 10.10.0.3 255.255.255.248 
+no shut 
+exit 
+
+interface g1/0/23 
+no switchport 
+ip address 10.10.24.1 255.255.255.0 
+no shut 
+exit 
+
+interface g1/0/24 
+no switchport 
+ip address 10.10.25.1 255.255.255.0 
+no shut 
+exit

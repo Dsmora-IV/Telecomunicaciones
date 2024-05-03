@@ -1,0 +1,101 @@
+! show ip protocols
+! show ip ospf interface brief
+! show ip ospf neighbor
+! show ip ospf, show ip ospf topology-info. show ip ospf database
+! show ip route static | begin Gateway
+
+
+! Implemente OSPF en R1 utilizando el método específico de la interfaz.
+! network 0.0.0.0 255.255.255.255 area 0 para evitar la habilitación de interfaces no deseadas
+interface loopback 1
+! especificar la unica red perteneciente a la interfaz
+ip ospf network point-to-point
+ip ospf 123 área 0 
+exit
+
+interfaz g0/0/1
+ip ospf 123 área 0
+end
+
+show ip protocols
+
+! a cada uno de los router se debe asignar una id "router-id <<router-id>>"
+! por defecto se utiliza la direccion IP
+router ospf 123
+router-id 1.1.1.1
+end
+
+! para forzar un identificador nuevo en la Ospf utilizar "clear ip ospf process"
+clear ip ospf process
+
+! confirmar el ID del router
+show ip protocol | include Router ID
+
+! ruta estatica predeterminada conectada a internet a traves de una interfaz Loopback
+ip route 0.0.0.0 0.0.0.0 lo0
+
+! comando para habilitar la propagación de la ruta predeterminada. La palabra clave siempre anuncia una ruta predeterminada
+! incluso si no existe una ruta predeterminada estática
+default-information originate
+
+show ip route static | begin Gateway
+
+!interfaces pasivas
+! no envia mensajes ni procesa paquetes recibidos, pero por seguridad las interfaces LAN no copnectadas deben ser pasivas
+!"passive-interface <<interface-id>>"
+router ospf 123
+passive-interface lo1
+end
+
+show ip protocols
+
+! ajustar los costos del enlace OSPF.
+! se determina el ancho de banda por defecto suele ser de 100 mbps
+! y se calcula  Cost = 100,000,000/Interface Bandwidth.
+! si se coloca 100 el costo sera de 1 para cada tipo de interfaz en los dsipositivos
+! 1000 hace referencia a 1 Gbps FastE=10, Gi=1 y 10Ge=1.
+! 10000 hace referencia a 10 Gbps FastE=100, Gi=10 y 10Ge=1.
+!! el costo de ancho de banda debe ser asignado con la misma velocidad en todos los routers del area.
+
+conf t
+router ospf 123
+auto-cost reference-bandwidth 1000
+end
+
+show ip ospf | include Ref
+!verificar despues de los cambios a cada router
+show ip route ospf | begin Gateway
+
+! modificar los temporizadores de intervalo de saludo y muerto.
+! Los mensajes de saludo OSPF se intercambian para establecer una relación de vecino
+! y garantizar que los vecinos OSPF adyacentes todavía estén disponibles.
+! OSPF utiliza un temporizador de saludo
+! y un temporizador de intervalo muerto que es cuatro veces mayor que el temporizador de saludo.
+
+interfaz g0/0/1
+ip ospf hello-interval 5
+ip ospf dead-interval 20 
+end
+! cada dispositivo debe tener el mismo protocolo de saludo y tiempo de muerte,
+!sino las interfaces conectadas se deshabilitaran
+
+show ip ospf interface g0/0/1 | include Timer
+
+! Colocación de DR y BDR
+! router designado (DR) y un router designado de respaldo (BDR).
+! 1) una interfaz con prioridad superior a 0 se asgina como BDR
+! 2) Si no existe ningún BDR, entonces se elige a sí mismo como BDR. Si hay un vínculo con otro enrutador,
+! se utiliza el ID de enrutador más alto.
+! 3) Si no hay DR, el BDR se promociona a sí mismo como DR
+! 4) El vecino con la siguiente prioridad más alta es elegido BDR.
+
+! verificar el estado actual de DR/BDR
+show ip ospf neighbor
+
+!asignar la prioridad mas alta para asignarlo como DR
+interfaz g0/0/1
+ip ospf prioridad 255
+end
+
+! verificar roles
+show ip ospf interface g0/0/1 | include State

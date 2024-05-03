@@ -1,0 +1,59 @@
+! show ip protocols
+! show ip ospf interface brief
+! show ip ospf neighbor
+! show ip route static | begin Gateway
+
+!  Al igual que D1, D2 debe estar habilitado para el enrutamiento mediante el ip routingcomando de configuración global.
+ip routing
+router ospf 123
+
+! para anunciar la red que esta conectada por una interfaz de router y/o switch
+! la mascara comodín (0.0.0.0) se puede calcular restando la máscara de subred
+! es decir que para una mascara "/29=255.255.255.248" esto seria una masccara comodin de 0.0.0.7
+network 10.10.0.0 0.0.0.7 area 0
+! el comando debe mostrar un mensaje de enlace con otra red (direccion IP)
+
+! se anuncian las otras redes en el area 0 con su respectiva mascara de comodin dependiendo el prefijo
+red 10.10.24.0 0.0.0.255 área 0
+red 10.10.25.0 0.0.0.255 área 0
+! no hay mensaje de confirmacion porque estan directamente conectadas al dispositivo
+! pero, si se anuncian de manera general a los otros dispositivos
+! tambien se podrian anunciar "network 10.10.24.0 0.0.254.255".
+
+end
+
+! se debe mirar el protocolo de enrutamiento y las redes comunicadas
+! "routing information source" mostrara las ips de los gateways hacia otros dispositivos.
+show ip protocols
+
+conf t
+router ospf 123 
+router-id 3.3.3.3 
+end
+
+!interfaces pasivas
+router ospf 123
+passive-interface default
+no passive-interface g1/0/5s
+
+! ajustar los costos del enlace OSPF.
+! se determina el ancho de banda por defecto suele ser de 100 mbps
+conf t
+router ospf 123
+auto-cost reference-bandwidth 1000
+end
+
+show ip ospf | include Ref
+
+interface g1/0/5
+ip ospf hello-interval 5
+ip ospf dead-interval 20
+
+
+end
+show ip ospf interface g1/0/5 | include Timer
+
+!bajar la prioridad paraque no se identifique como DR o BDR
+interface g1/0/5
+ip ospf priority 0
+end
