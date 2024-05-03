@@ -1,0 +1,59 @@
+hostname R1
+no ip domain lookup
+ipv6 unicast-routing
+banner motd # R1, Investigate Static Routes #
+line con 0
+exec-timeout 0 0
+logging synchronous
+exit
+line vty 0 4
+privilege level 15
+password cisco123
+exec-timeout 0 0
+logging synchronous
+login
+exit
+clock timezone GTM -5
+end
+copy running-config startup-config
+
+
+hostname R2
+no ip domain lookup
+ipv6 unicast-routing
+banner motd # R2, Investigate Static Routes #
+line con 0
+exec-timeout 0 0
+logging synchronous
+exit
+line vty 0 4
+privilege level 15
+password cisco123
+exec-timeout 0 0
+logging synchronous
+login
+exit
+clock timezone GTM -5
+end
+copy running-config startup-config
+
+
+hostname R3
+no ip domain lookup
+ipv6 unicast-routing
+banner motd # R3, Investigate Static Routes #
+line con 0
+exec-timeout 0 0
+logging synchronous
+exit
+line vty 0 4
+privilege level 15
+password cisco123
+exec-timeout 0 0
+logging synchronous
+login
+exit
+clock timezone GTM -5
+end
+copy running-config startup-config
+
