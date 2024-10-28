@@ -1,0 +1,87 @@
+hostname R3
+no ip domain lookup
+
+line con 0
+logging sync
+exec-time 0 0
+exit
+
+interface Loopback0
+ip address 192.168.3.1 255.255.255.224
+no shut
+exit
+
+interface Loopback1
+ip address 192.168.3.65 255.255.255.192
+no shut
+exit
+
+interface GigabitEthernet0/0/0
+ip address 10.2.3.3 255.255.255.0
+negotiation auto
+no shut
+exit
+
+interface Serial0/1/0
+ip address 10.1.3.3 255.255.255.128
+no shut
+exit
+
+interface Serial0/1/1
+ip address 10.1.3.130 255.255.255.128
+no shut
+exit
+
+copy running-config startup-config
+
+router bgp 300
+bgp router-id 3.3.3.3
+no bgp default ipv4-unicast
+
+neighbor 10.2.3.2 remote-as 500
+neighbor 10.1.3.1 remote-as 1000
+neighbor 10.1.3.129 remote-as 1000
+
+!Comando para verificar las relaciones entre vecinos de BGP
+show ip route bgp | begin Gateway
+
+address-family ipv4
+neighbor 10.1.3.1 activate
+neighbor 10.1.3.129 activate
+neighbor 10.2.3.2 activate
+network 192.168.3.0 mask 255.255.255.224
+network 192.168.3.64 mask 255.255.255.192
+
+!volver a verificar la tabla de enrutamiento de cada uno de los routers
+show ip route bgp | begin Gateway
+!verificar conexión estabilisada entre los routers
+
+!!Resumen de prefijos (esto genera que no se guarde la misma red multiples veces en caso de contener mas de un prefijo)
+router bgp 300
+address-family ipv4
+aggregate-address 192.168.3.0 255.255.255.0 summary-only
+
+!verificar resumen en cada uno de los routers
+show ip route bgp | begin Gateway
+
+!DESPUES DE VERIFICAR RUTAS RESUMIDAS (R1)
+
+show ip route 192.168.1.0
+!RESUMIR RUTA EN R2
+
+!verificar rutas resumidas establecidas desde R2
+show ip route bgp | begin Gateway
+show ip route 192.168.1.0
+
+show ip bgp
+
+!DESPUES DE VERIFICAR IR A R2
+
+!despues de establecer la ruta resumida en R2 con la opcion de AS-SET revisar la tabla de enrutamiento para verificar resumen de la ruta
+show ip route bgp | begin Gateway
+
+!
+show ip bgp
+show ip bgp 192.168.1.0 | begin Refresh
+
+!DESPUES DE VERIFICAR ESTABLECER RUTA PREDETERMINADA EN R1 
