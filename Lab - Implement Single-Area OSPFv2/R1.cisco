@@ -10,11 +10,11 @@
 interface loopback 1
 ! especificar la unica red perteneciente a la interfaz
 ip ospf network point-to-point
-ip ospf 123 área 0 
+ip ospf 123 area 0 
 exit
 
 interfaz g0/0/1
-ip ospf 123 área 0
+ip ospf 123 area 0
 end
 
 show ip protocols
