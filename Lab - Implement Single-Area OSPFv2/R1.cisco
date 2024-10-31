@@ -13,7 +13,7 @@ ip ospf network point-to-point
 ip ospf 123 area 0 
 exit
 
-interfaz g0/0/1
+interface g0/0/1
 ip ospf 123 area 0
 end
 
