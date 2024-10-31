@@ -14,8 +14,8 @@ network 10.10.0.0 0.0.0.7 area 0
 ! el comando debe mostrar un mensaje de enlace con otra red (direccion IP)
 
 ! se anuncian las otras redes en el area 0 con su respectiva mascara de comodin dependiendo el prefijo
-network 10.10.24.0 0.0.0.255 área 0
-network 10.10.25.0 0.0.0.255 área 0
+network 10.10.24.0 0.0.0.255 area 0
+network 10.10.25.0 0.0.0.255 area 0
 ! no hay mensaje de confirmacion porque estan directamente conectadas al dispositivo
 ! pero, si se anuncian de manera general a los otros dispositivos
 ! tambien se podrian anunciar "network 10.10.24.0 0.0.254.255".
