@@ -34,7 +34,7 @@ end
 !interfaces pasivas
 router ospf 123
 passive-interface default
-no passive-interface g1/0/5s
+no passive-interface g1/0/5
 
 ! ajustar los costos del enlace OSPF.
 ! se determina el ancho de banda por defecto suele ser de 100 mbps
