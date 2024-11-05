@@ -17,7 +17,7 @@ ip address 192.168.1.65 255.255.255.192
 no shut
 exit
 
-interface GigabitEthernet0/0/0
+interface GigabitEthernet0/0
 ip address 10.1.2.1 255.255.255.0
 no shut
 exit
