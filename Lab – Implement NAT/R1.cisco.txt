@@ -1,0 +1,28 @@
+hostname R1
+no ip domain lookup
+
+line con 0
+exec-timeout 0 0
+logging synchronous
+exit
+
+line vty 0 4
+privilege level 15
+password cisco123
+exec-timeout 0 0
+logging synchronous
+login
+exit
+
+banner motd # This is R1, Implement NAT Lab #
+
+interface g0/0
+ip address 209.165.200.1 255.255.255.0
+no shut
+exit
+
+interface g0/1
+ip address 10.0.0.1 255.255.255.0
+no shut
+exit
+ip route 0.0.0.0 0.0.0.0 g0/0/0 209.165.200.2
