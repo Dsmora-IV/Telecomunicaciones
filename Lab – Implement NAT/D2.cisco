@@ -1,0 +1,35 @@
+hostname D2
+no ip domain lookup
+
+line con 0
+exec-timeout 0 0
+logging synchronous
+exit
+
+line vty 0 4
+privilege level 15
+password cisco123
+exec-timeout 0 0
+logging synchronous
+login
+exit
+
+banner motd # This is D2, Implement NAT Lab #
+
+interface range Fa0/1-24, Fa1/1-4
+shutdown
+exit
+
+interface range Fa0/11, Fa0/23-24
+no shutdown
+exit
+
+interface range Fa0/23-24
+switchport mode access
+spanning-tree portfast
+exit
+
+interface vlan 1
+ip address 10.1.0.2 255.255.255.0
+no shutdown
+ip default-gateway 10.1.0.1
