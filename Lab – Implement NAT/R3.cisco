@@ -16,12 +16,12 @@ exit
 
 banner motd # This is R3, Implement NAT Lab #
 
-interface g0/0/0
+interface g0/0
 ip address 209.165.224.3 255.255.255.0
 no shut
 exit
 
-interface g0/0/1
+interface g0/1
 ip address 10.1.0.1 255.255.255.0
 no shut
 exit
