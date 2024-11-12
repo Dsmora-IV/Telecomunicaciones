@@ -16,7 +16,7 @@ exit
 
 banner motd # This is D2, Implement NAT Lab #
 
-interface range Fa0/1-24, Fa1/1-4
+interface range Fa0/1-24, Gi0/1-2
 shutdown
 exit
 
