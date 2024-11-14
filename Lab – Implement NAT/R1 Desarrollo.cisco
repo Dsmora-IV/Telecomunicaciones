@@ -1,0 +1,15 @@
+! hacer que una dirección local interna sea accesible a través de una dirección global externa.
+
+! Con el comando ip nat nat inside source static 
+! se anuncia la red que posee la Vlan 1 como 209.165.200.99 para el acceso desde una direccion global externa.
+ip nat inside source static 10.0.0.2 209.165.200.99
+
+!especificacion de interfaz externa
+interface g0/0/0
+ip nat outside
+exit
+
+!especificacion de interfaz interna
+interface g0/0/1
+ip nat inside
+exit
